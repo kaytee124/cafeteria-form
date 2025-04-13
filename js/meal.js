@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
         submitButton.disabled = true;
         submitButton.textContent = 'Submitting...';
 
-        fetch('action/meal_form_action.php', {
+        fetch('../action/meal_form_action.php', {
             method: 'POST',
             body: formData
         })

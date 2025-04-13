@@ -43,7 +43,7 @@ class meal_class extends db_connection {
                     continue; // Skip empty meal names
                 }
                 $item_sql = "INSERT INTO meal_items_table (schedule_id, meal_name) 
-                             VALUES ('$schedule_id', '$meal_name')";
+                            VALUES ('$schedule_id', '$meal_name')";
                 if (!mysqli_query($conn, $item_sql)) {
                     throw new Exception("Failed to insert meal item: " . mysqli_error($conn));
                 }
@@ -76,6 +76,57 @@ class meal_class extends db_connection {
         $cafeterias = $this->db_fetch_all($sql);
         mysqli_close($conn);
         return $cafeterias;
+    }
+
+    // Get meals for a specific cafeteria
+    public function get_cafeteria_meals($cafeteria_id) {
+        $conn = $this->db_conn();
+        
+        // Check if connection failed
+        if ($conn === false) {
+            throw new Exception("Database connection failed.");
+        }
+
+        // Sanitize input
+        $cafeteria_id = mysqli_real_escape_string($conn, $cafeteria_id);
+
+        // Query to get meals organized by meal type
+        $sql = "SELECT c.cafeteria_name, ms.meal_day, ms.meal_type, mi.meal_name
+                FROM cafeteria_table c
+                JOIN meal_schedule_table ms ON c.cafeteria_id = ms.cafeteria_id
+                JOIN meal_items_table mi ON ms.schedule_id = mi.schedule_id
+                WHERE c.cafeteria_id = '$cafeteria_id'
+                ORDER BY ms.meal_day, ms.meal_type, mi.meal_name";
+
+        $result = mysqli_query($conn, $sql);
+        
+        if ($result === false) {
+            mysqli_close($conn);
+            throw new Exception("Query failed: " . mysqli_error($conn));
+        }
+
+        $meals = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $day = $row['meal_day'];
+            $type = $row['meal_type'];
+            $cafeteria_name = $row['cafeteria_name'];
+            
+            // Initialize structure if not exists
+            if (!isset($meals[$day])) {
+                $meals[$day] = [
+                    'cafeteria_name' => $cafeteria_name,
+                    'Breakfast' => [],
+                    'Lunch' => [],
+                    'Dinner' => []
+                ];
+            }
+            
+            // Add meal to appropriate meal type
+            $meals[$day][$type][] = $row['meal_name'];
+        }
+
+        mysqli_close($conn);
+        return $meals;
     }
 }
 ?>

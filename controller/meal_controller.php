@@ -16,4 +16,10 @@ function view_cafeterias_controller() {
     $meal = new meal_class();
     return $meal->get_cafeterias();
 }
+
+// Function to get meals for a specific cafeteria
+function view_cafeteria_meals_controller($cafeteria_id) {
+    $meal = new meal_class();
+    return $meal->get_cafeteria_meals($cafeteria_id);
+}
 ?>

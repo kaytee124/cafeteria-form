@@ -1,82 +1,50 @@
-<?php
-require_once("controller/meal_controller.php");
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <title>Meal Form</title>
+    <title>Welcome to Cafeteria System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .welcome-container {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        .welcome-container h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .welcome-container p {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        .btn-view-cafeterias {
+            padding: 10px 30px;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="main">
-            <div class="heading">
-                <h2>Meal Form</h2>
-            </div>
-            <div class="lab-container">
-                <form action="../actions/mealaction.php" class="form" id="MealForm">
-                    <div class="input-box">
-                        <label>Cafeteria Name</label>
-                        <select id="cafeteria-id" name="cafeteria-id" required>
-                            <option value="">Select Cafeteria</option>
-                            <?php
-                            $cafeterias = view_cafeterias_controller();
-                            if (!empty($cafeterias)) {
-                                foreach ($cafeterias as $cafeteria) {
-                                    echo "<option value='{$cafeteria['cafeteria_id']}'>{$cafeteria['cafeteria_name']}</option>";
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="input-box">
-                        <label>Day</label>
-                        <select id="meal-day" name="meal-day" required>
-                            <option value="">Choose day</option>
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                            <option value="Friday">Friday</option>
-                            <option value="Saturday">Saturday</option>
-                            <option value="Sunday">Sunday</option>
-                        </select>
-                    </div>
-                    <div class="input-box">
-                        <label>Meal Type</label>
-                        <select id="meal-type" name="meal-type" required>
-                            <option value="">Choose type</option>
-                            <option value="Breakfast">Breakfast</option>
-                            <option value="Lunch">Lunch</option>
-                            <option value="Dinner">Dinner</option>
-                        </select>
-                    </div>
-
-                    <!-- Meal Container - will hold all meal entries -->
-                    <div id="mealContainer">
-                        <!-- First meal entry (default) -->
-                        <div class="meal-entry">
-                            <div class="input-row">
-                                <div class="input-box">
-                                    <label>Meal Name</label>
-                                    <input type="text" name="meals[]" placeholder="Enter meal" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Button to add more meals -->
-                    <button type="button" id="addMealBtn" class="add-btn">
-                        <i class="fas fa-plus"></i> Add Another Meal
-                    </button>
-                    
-                    <button type="submit" class="request-btn">Submit Form</button>
-                </form>
-            </div>
-        </div>
+    <div class="welcome-container">
+        <h1>Welcome to Our Cafeteria System</h1>
+        <p>Explore delicious meals available at our various cafeterias. Click below to view all cafeterias and their menus.</p>
+        <a href="view/view_meals.php" class="btn btn-primary btn-view-cafeterias">View Cafeterias</a>
     </div>
-    <script src="js/meal.js"></script>
+
+    <!-- Bootstrap JS (optional, included for consistency) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
