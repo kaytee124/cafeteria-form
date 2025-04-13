@@ -66,17 +66,23 @@ $cafeterias = view_cafeterias_controller();
             color: #6c757d;
             font-style: italic;
         }
+        .add-meal-btn {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container py-5">
         <h1 class="text-center mb-5">Cafeteria Meals</h1>
+        <div class="text-center add-meal-btn">
+            <a href="mealform.php" class="btn btn-success">Add New Meal</a>
+        </div>
         <div class="row">
             <?php foreach ($cafeterias as $cafeteria): ?>
                 <div class="col-md-4">
                     <div class="cafeteria-card bg-primary text-white rounded" 
-                         data-cafeteria-id="<?php echo htmlspecialchars($cafeteria['cafeteria_id']); ?>" 
-                         data-cafeteria-name="<?php echo htmlspecialchars($cafeteria['cafeteria_name']); ?>">
+                        data-cafeteria-id="<?php echo htmlspecialchars($cafeteria['cafeteria_id']); ?>" 
+                        data-cafeteria-name="<?php echo htmlspecialchars($cafeteria['cafeteria_name']); ?>">
                         <h3><?php echo htmlspecialchars($cafeteria['cafeteria_name']); ?></h3>
                     </div>
                 </div>
