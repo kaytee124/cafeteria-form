@@ -3,17 +3,37 @@
   "builds": [
     {
       "src": "index.php",
-      "use": "@vercel/php"
+      "use": "@vercel/static-build",
+      "config": {
+        "installCommand": "apt-get update && apt-get install -y php && php -v",
+        "buildCommand": "php index.php"
+      }
     },
     {
-      "src": "cafeteria-form/**/*.php",
-      "use": "@vercel/php"
+      "src": "actions/**/*.php",
+      "use": "@vercel/static-build",
+      "config": {
+        "installCommand": "apt-get update && apt-get install -y php && php -v",
+        "buildCommand": "php action/meal_form_action.php"
+      }
+    },
+    {
+      "src": "controller/**/*.php",
+      "use": "@vercel/static-build",
+      "config": {
+        "installCommand": "apt-get update && apt-get install -y php && php -v",
+        "buildCommand": "php controller/meal_controller.php"
+      }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "index.php"
+    },
+    {
+      "src": "/action/(.*)",
+      "dest": "/action/$1"
     }
   ]
 }
